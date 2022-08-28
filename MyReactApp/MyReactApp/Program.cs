@@ -1,3 +1,5 @@
+using Newtonsoft.Json.Serialization;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,17 +8,25 @@ builder.Services.AddControllersWithViews();
 //enable cors
 builder.Services.AddCors(c =>
 {
-    c.AddPolicy("AllowOrigin", 
-        options => 
+    c.AddPolicy("AllowOrigin",
+        options =>
         options.AllowAnyOrigin()
         .AllowAnyMethod()
         .AllowAnyHeader());
 });
 
+
+//Json serializer
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling
+    = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+    .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+
 var app = builder.Build();
 
 //use cors
-app.UseCors(options =>options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
