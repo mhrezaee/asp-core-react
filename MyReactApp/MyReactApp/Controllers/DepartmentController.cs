@@ -7,13 +7,6 @@ namespace MyReactApp.Controllers;
 [Route("api/[controller]")]
 public class DepartmentController : ControllerBase
 {
-    private readonly IConfiguration _configuration;
-
-    public DepartmentController(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
-
     [HttpGet]
     public JsonResult Get()
     {
