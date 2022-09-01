@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.FileProviders;
 using Newtonsoft.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,17 +12,17 @@ builder.Services.AddCors(c =>
 {
     c.AddPolicy("AllowOrigin",
         options =>
-        options.AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader());
+            options.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 });
 
 
 //Json serializer
 builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
-    options.SerializerSettings.ReferenceLoopHandling
-    = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+        options.SerializerSettings.ReferenceLoopHandling
+            = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
     .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
 var app = builder.Build();
@@ -37,6 +39,11 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions()
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Photos")),
+    RequestPath = "/Photos"
+});
 app.UseRouting();
 
 
@@ -44,6 +51,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html"); ;
+app.MapFallbackToFile("index.html");
+;
 
 app.Run();

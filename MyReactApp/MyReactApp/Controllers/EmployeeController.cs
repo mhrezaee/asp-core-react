@@ -7,6 +7,13 @@ namespace MyReactApp.Controllers;
 [Route("api/[controller]")]
 public class EmployeeController : ControllerBase
 {
+    private readonly IWebHostEnvironment _env;
+
+    public EmployeeController(IWebHostEnvironment env)
+    {
+        _env = env;
+    }
+
     [HttpGet]
     public JsonResult Get()
     {
@@ -47,6 +54,28 @@ public class EmployeeController : ControllerBase
         employees.Remove(dbEmployee);
         return new JsonResult(employees);
     }
+    [Route("SaveFile")]
+    [HttpPost]
+    public async Task<JsonResult> SaveFile([FromForm]IFormFile uploadedFile)
+    {
+        try
+        {
+            var fileName = uploadedFile.FileName;
+            var physicalPath = _env.ContentRootPath + "/Photos/" + fileName;
+
+            await using (var stream = new FileStream(physicalPath,FileMode.Create))
+            {
+                await uploadedFile.CopyToAsync(stream);
+            }
+
+            return new JsonResult(fileName);
+        }
+        catch (Exception e)
+        {
+            return new JsonResult("anonymous.png");
+        }
+    }
+
 
     private static List<Employee> Employees =>
         new List<Employee>
