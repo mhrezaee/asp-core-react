@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 export class Department extends Component {
-    static displayName = Home.name;
+    static displayName = Department.name;
 
     render() {
         return (
