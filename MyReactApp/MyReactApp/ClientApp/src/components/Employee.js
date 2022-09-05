@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-export class Home extends Component {
+export class Employee extends Component {
     static displayName = Home.name;
 
     render() {
         return (
             <div className="container">
                 <h3 className="m-3 d-flex justify-content-left">
-                    my react app home page!
+                    this is Employee page
                 </h3>
             </div>
         );

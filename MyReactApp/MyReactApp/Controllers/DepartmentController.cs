@@ -47,6 +47,12 @@ public class DepartmentController : ControllerBase
         departments.Remove(dbDepartment);
         return new JsonResult(departments);
     }
+    [Route("GetAllDepartmentNames")]
+    public JsonResult GetAllDepartmentNames()
+    {
+        return new JsonResult(Departments.Select(_ => _.Name));
+    }
+
 
     private static List<Department> Departments =>
         new List<Department>

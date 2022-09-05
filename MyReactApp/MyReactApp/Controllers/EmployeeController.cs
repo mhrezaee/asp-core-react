@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using MyReactApp.Models;
 
 namespace MyReactApp.Controllers;
@@ -75,8 +76,7 @@ public class EmployeeController : ControllerBase
             return new JsonResult("anonymous.png");
         }
     }
-
-
+    
     private static List<Employee> Employees =>
         new List<Employee>
         {
