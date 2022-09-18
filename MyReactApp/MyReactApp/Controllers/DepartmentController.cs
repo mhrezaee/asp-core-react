@@ -19,7 +19,7 @@ public class DepartmentController : ControllerBase
     {
         var departments = Departments;
         departments.Add(department);
-        return new JsonResult(Departments);
+        return new JsonResult(departments);
     }
 
     [HttpPut]
