@@ -30,8 +30,14 @@ export class Department extends Component {
 
     render() {
         const { deps, depid, depname } = this.state;
-        let addModalClose = () => this.setState({ addModalShow: false });
-        let editModalClose = () => this.setState({ editModalShow: false });
+        let addModalClose = () => {
+            this.setState({ addModalShow: false });
+            this.refreshList();
+        }
+        let editModalClose = () => {
+            this.setState({ editModalShow: false });
+            this.refreshList();
+        }
 
         return (
             <div className="container">
