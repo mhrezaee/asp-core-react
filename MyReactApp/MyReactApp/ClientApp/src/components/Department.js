@@ -3,12 +3,13 @@ import { Table } from 'react-bootstrap';
 
 import { Button, ButtonToolbar } from 'react-bootstrap';
 import { AddDepartmentModal } from './AddDepartmentModal';
+import { EditDepartmentModal } from './EditDepartmentModal';
 
 export class Department extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { deps: [], addModalShow: false }
+        this.state = { deps: [], addModalShow: false, editModalShow : false }
     }
 
     refreshList() {
@@ -28,8 +29,9 @@ export class Department extends Component {
     static displayName = Department.name;
 
     render() {
-        const { deps } = this.state;
+        const { deps, depid, depname } = this.state;
         let addModalClose = () => this.setState({ addModalShow: false });
+        let editModalClose = () => this.setState({ editModalShow: false });
 
         return (
             <div className="container">
@@ -46,7 +48,18 @@ export class Department extends Component {
                             <tr key={dep.Id }>
                                 <td>{dep.Id }</td>
                                 <td>{dep.Name }</td>
-                                <td>Edit / Delete</td>
+                                <td>
+                                    <ButtonToolbar>
+                                        <Button className="mr-2" variant="info"
+                                            onClick={() => this.setState({ editModalShow: true, depid: dep.Id, depname: dep.Name })}  >
+                                            Edit
+                                        </Button>
+                                        <EditDepartmentModal show={this.state.editModalShow}
+                                            onHide={editModalClose}
+                                            depid={depid}
+                                            depname={depname } />
+                                    </ButtonToolbar>
+                                </td>
                             </tr>
                             )}
                     </tbody>
