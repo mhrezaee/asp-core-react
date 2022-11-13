@@ -1,14 +1,103 @@
 import React, { Component } from 'react';
+import { Table } from 'react-bootstrap';
+
+import { Button, ButtonToolbar } from 'react-bootstrap';
+import { AddEmployeeModal } from './AddEmployeeModal';
+import { EditEmployeeModal } from './EditEmployeeModal';
 
 export class Employee extends Component {
-    static displayName = Employee.name;
+
+    constructor(props) {
+        super(props);
+        this.state = { emps: [], addModalShow: false, editModalShow: false }
+    }
+
+    refreshList() {
+        fetch(process.env.REACT_APP_API + 'employee')
+            .then(response => response.json())
+            .then(data => { this.setState({ emps: data }); });
+    }
+
+    componentDidMount() {
+        this.refreshList();
+    }
+
+    //componentDidUpdate() {
+    //    this.refreshList();
+    //}
+
+    static displayName = Department.name;
+
+    deleteEmployee(empId) {
+        if (window.confirm('Are you sure?!')) {
+            fetch(process.env.REACT_APP_API + 'employee/' + empId, {
+                method: 'DELETE',
+                header: { 'Accept': 'application/json', 'Content-Type': 'application/josn' }
+            }
+            )
+
+        }
+    }
+
 
     render() {
+        const { emps, empid, empname, depmt, photofilename,doj } = this.state;
+        let addModalClose = () => {
+            this.setState({ addModalShow: false });
+            this.refreshList();
+        }
+        let editModalClose = () => {
+            this.setState({ editModalShow: false });
+            this.refreshList();
+        }
+
         return (
             <div className="container">
-                <h3 className="m-3 d-flex justify-content-left">
-                    this is Employee page
-                </h3>
+                <Table className="mt-4" striped bordered hover size="sm">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>DateOfJoin</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {emps.map(emp =>
+                            <tr key={emp.Id}>
+                                <td>{emp.Id}</td>
+                                <td>{emp.Name}</td>
+                                <td>{emp.Department}</td>
+                                <td>{emp.DateOfJoining}</td>
+                                <td>
+                                    <ButtonToolbar>
+                                        <Button className="mr-2" variant="info"
+                                            onClick={() => this.setState({ editModalShow: true, empid: emp.Id, empname: emp.Name })}  >
+                                            Edit
+                                        </Button>
+                                        <Button className="mr-2" variant="danger"
+                                            onClick={() => this.deleteEmployee(emp.Id)}  >
+                                            Delete
+                                        </Button>
+                                        <EditDepartmentModal show={this.state.editModalShow}
+                                            onHide={editModalClose}
+                                            depid={empid}
+                                            depname={depname} />
+                                    </ButtonToolbar>
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </Table>
+                <ButtonToolbar>
+                    <Button variant='primary'
+                        onClick={() => this.setState({ addModalShow: true })}>
+                        Add Department</Button>
+
+                    <AddDepartmentModal show={this.state.addModalShow}
+                        onHide={addModalClose} />
+                </ButtonToolbar>
             </div>
         );
     }
