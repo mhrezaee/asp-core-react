@@ -73,17 +73,24 @@ export class Employee extends Component {
                                 <td>
                                     <ButtonToolbar>
                                         <Button className="mr-2" variant="info"
-                                            onClick={() => this.setState({ editModalShow: true, empid: emp.Id, empname: emp.Name })}  >
+                                            onClick={() => this.setState({
+                                                editModalShow: true, empid: emp.Id, empname: emp.Name,
+                                                depmt: emp.Department, photofilename: emp.PhotoFileName, doj: emp.DateOfJoining
+                                            })}  >
                                             Edit
                                         </Button>
                                         <Button className="mr-2" variant="danger"
                                             onClick={() => this.deleteEmployee(emp.Id)}  >
                                             Delete
                                         </Button>
-                                        <EditDepartmentModal show={this.state.editModalShow}
+                                        <EditemployeeModal show={this.state.editModalShow}
                                             onHide={editModalClose}
-                                            depid={empid}
-                                            depname={depname} />
+                                            empid={empid}
+                                            empname={depname}
+                                            depmt={depmt}
+                                            photofilename={photofilename}
+                                            doj={doj}
+                                        />
                                     </ButtonToolbar>
                                 </td>
                             </tr>
@@ -93,9 +100,9 @@ export class Employee extends Component {
                 <ButtonToolbar>
                     <Button variant='primary'
                         onClick={() => this.setState({ addModalShow: true })}>
-                        Add Department</Button>
+                        Add Employee</Button>
 
-                    <AddDepartmentModal show={this.state.addModalShow}
+                    <AddEmployeeModal show={this.state.addModalShow}
                         onHide={addModalClose} />
                 </ButtonToolbar>
             </div>
