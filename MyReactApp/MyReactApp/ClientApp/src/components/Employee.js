@@ -26,7 +26,7 @@ export class Employee extends Component {
     //    this.refreshList();
     //}
 
-    static displayName = Department.name;
+    static displayName = Employee.name;
 
     deleteEmployee(empId) {
         if (window.confirm('Are you sure?!')) {
@@ -83,10 +83,10 @@ export class Employee extends Component {
                                             onClick={() => this.deleteEmployee(emp.Id)}  >
                                             Delete
                                         </Button>
-                                        <EditemployeeModal show={this.state.editModalShow}
+                                        <EditEmployeeModal show={this.state.editModalShow}
                                             onHide={editModalClose}
                                             empid={empid}
-                                            empname={depname}
+                                            empname={empname}
                                             depmt={depmt}
                                             photofilename={photofilename}
                                             doj={doj}
