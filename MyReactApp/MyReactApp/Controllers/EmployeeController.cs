@@ -80,10 +80,10 @@ public class EmployeeController : ControllerBase
     private static List<Employee> Employees =>
         new List<Employee>
         {
-            new () {Id = 1, Name = "Employee 1",DateOfJoining = DateTime.Now.ToShortDateString(),Department = "Dep 1"},
-            new () {Id = 1, Name = "Employee 2",DateOfJoining = DateTime.Now.ToShortDateString(),Department = "Dep 3"},
-            new () {Id = 1, Name = "Employee 3",DateOfJoining = DateTime.Now.ToShortDateString(),Department = "Dep 2"},
-            new () {Id = 1, Name = "Employee 4",DateOfJoining = DateTime.Now.ToShortDateString(),Department = "Dep 4"},
+            new () {Id = 1, Name = "Employee 1",DateOfJoining = DateTime.Now.ToShortDateString(),Department = "Department 1"},
+            new () {Id = 2, Name = "Employee 2",DateOfJoining = DateTime.Now.ToShortDateString(),Department = "Department 3"},
+            new () {Id = 3, Name = "Employee 3",DateOfJoining = DateTime.Now.ToShortDateString(),Department = "Department 2"},
+            new () {Id = 4, Name = "Employee 4",DateOfJoining = DateTime.Now.ToShortDateString(),Department = "Department 4"},
         };
 
 }
